@@ -41,6 +41,11 @@ import { ClockIcon, FlagIcon, UserGroupIcon, TrophyIcon } from '@heroicons/vue/2
 
 const programme = [
   {
+    time: 'A venir',
+    description: 'Le programme sera publié le 18 Février 2025',
+    icon: ClockIcon
+  },
+  {
     time: '18h00',
     description: 'Ouverture des portes et accueil du public',
     icon: ClockIcon
