@@ -1,42 +1,46 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-pink-50/30 to-blue-50/30 pt-24 pb-16">
+  <div class="min-h-screen bg-gradient-to-b from-pink-50/30 to-blue-50/30 pt-32 sm:pt-36 pb-16">
     <div class="container-custom mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Section Contact -->
-      <div class="max-w-xl mx-auto bg-white rounded-2xl shadow-custom p-8 mb-16">
-        <h1 class="text-3xl font-bold text-center mb-3">CONTACTEZ-NOUS</h1>
-        <p class="text-center text-slate-600 mb-8">
-          Une question ? N'hésitez pas à nous contacter.<br>
-          Notre équipe vous répondra dans les plus brefs délais.
-        </p>
+      <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-12">
+          <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">CONTACTEZ-NOUS</h1>
+          <p class="text-lg text-slate-600 max-w-lg mx-auto">
+            Une question ? N'hésitez pas à nous contacter.<br>
+            Notre équipe vous répondra dans les plus brefs délais.
+          </p>
+        </div>
 
-        <form @submit.prevent="handleSubmit" class="space-y-6">
-          <div class="space-y-4">
-            <div>
-              <label for="name" class="form-label">
-                Nom et prénom <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="name"
-                v-model="formData.name"
-                type="text"
-                required
-                class="form-input"
-                placeholder="Votre nom complet"
-              >
-            </div>
+        <div class="bg-white rounded-2xl shadow-custom p-8 sm:p-10 mb-16">
+          <form @submit.prevent="handleSubmit" class="space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label for="name" class="form-label">
+                  Nom et prénom <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="name"
+                  v-model="formData.name"
+                  type="text"
+                  required
+                  class="form-input"
+                  placeholder="Votre nom complet"
+                >
+              </div>
 
-            <div>
-              <label for="email" class="form-label">
-                Email <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="email"
-                v-model="formData.email"
-                type="email"
-                required
-                class="form-input"
-                placeholder="votre@email.com"
-              >
+              <div>
+                <label for="email" class="form-label">
+                  Email <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="email"
+                  v-model="formData.email"
+                  type="email"
+                  required
+                  class="form-input"
+                  placeholder="votre@email.com"
+                >
+              </div>
             </div>
 
             <div>
@@ -66,28 +70,60 @@
                 placeholder="Votre message..."
               ></textarea>
             </div>
-          </div>
 
-          <button
-            type="submit"
-            class="w-full flex justify-center items-center px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200"
-          >
-            Envoyer le message
-            <svg
-              class="w-5 h-5 ml-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            <button
+              type="submit"
+              class="w-full sm:w-auto px-8 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 flex items-center justify-center space-x-2"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
-          </button>
-        </form>
+              <span>Envoyer le message</span>
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- Section FAQ -->
+        <div class="bg-white rounded-2xl shadow-custom p-8 sm:p-10">
+          <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4">Questions fréquentes</h2>
+          <p class="text-center text-slate-600 mb-10 max-w-lg mx-auto">
+            Retrouvez ici les réponses aux questions les plus courantes concernant l'événement.
+          </p>
+          <div class="space-y-4">
+            <div
+              v-for="(item, index) in faqItems"
+              :key="index"
+              class="bg-gray-50 rounded-xl hover:bg-gray-100/80 transition-all duration-200"
+            >
+              <button
+                class="w-full px-6 py-4 text-left flex justify-between items-center gap-4"
+                @click="toggleItem(index)"
+              >
+                <span class="font-medium text-gray-900 text-lg">{{ item.question }}</span>
+                <ChevronDownIcon
+                  class="w-6 h-6 text-gray-400 transition-transform duration-300 flex-shrink-0"
+                  :class="{ 'rotate-180': openIndex === index }"
+                />
+              </button>
+              <div
+                v-show="openIndex === index"
+                class="px-6 pb-6 text-slate-600 leading-relaxed"
+              >
+                {{ item.answer }}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -95,6 +131,7 @@
 
 <script setup>
 import { ref } from "vue"
+import { ChevronDownIcon } from "@heroicons/vue/24/outline"
 
 const formData = ref({
   name: "",
@@ -103,27 +140,73 @@ const formData = ref({
   message: ""
 })
 
+const openIndex = ref(null)
+
+const toggleItem = (index) => {
+  openIndex.value = openIndex.value === index ? null : index
+}
+
+const faqItems = [
+  {
+    question: "Quand aura lieu le SX Tour Douai ?",
+    answer: "Le SX Tour Douai aura lieu le 15 juin 2024. L'événement se déroulera sur une journée complète avec des qualifications le matin et les finales l'après-midi."
+  },
+  {
+    question: "Comment acheter des billets ?",
+    answer: "Les billets sont disponibles sur notre site dans la section 'Tickets'. Vous pouvez choisir entre différentes catégories : Standard, VIP, et Pack Famille."
+  },
+  {
+    question: "Y a-t-il un âge minimum pour assister à l'événement ?",
+    answer: "Non, l'événement est ouvert à tous les âges. Les enfants de moins de 12 ans doivent être accompagnés d'un adulte. Des tarifs spéciaux sont disponibles pour les enfants."
+  },
+  {
+    question: "Que faire en cas de pluie ?",
+    answer: "L'événement a lieu même en cas de pluie légère. En cas de conditions météorologiques extrêmes, l'événement peut être reporté. Dans ce cas, vos billets resteront valables pour la nouvelle date."
+  }
+]
+
 const handleSubmit = () => {
   // Logique d'envoi du formulaire à implémenter
   console.log("Form submitted:", formData.value)
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
 .container-custom {
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .shadow-custom {
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
 }
 
 .form-label {
-  @apply block text-sm font-medium text-gray-700 mb-1;
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
 }
 
 .form-input {
-  @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors duration-200;
+  display: block;
+  width: 100%;
+  border-radius: 0.5rem;
+  border-color: #D1D5DB;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #EF4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+.form-input::placeholder {
+  color: #9CA3AF;
 }
 </style>

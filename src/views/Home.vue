@@ -65,25 +65,43 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onActivated, onDeactivated } from 'vue'
 import ProgrammeSection from '@/components/ProgrammeSection.vue'
 import PilotesSection from '@/components/PilotesSection.vue'
+import videoSource from '@/assets/videos/SXTour2024.mp4'
 
 const videoRef = ref(null)
-const videoUrl = new URL('@/assets/videos/SXTour2024.mp4', import.meta.url).href
+const videoUrl = videoSource
 
-const handleVideoError = () => {
-  console.error('Erreur lors du chargement de la vidéo')
+const handleVideoError = (error) => {
+  console.error('Erreur de lecture vidéo:', error)
+}
+
+const startVideo = async () => {
   if (videoRef.value) {
-    videoRef.value.style.display = 'none'
+    try {
+      await videoRef.value.play()
+      videoRef.value.currentTime = 0 // Remet la vidéo au début
+    } catch (error) {
+      console.error('Erreur lors de la lecture de la vidéo:', error)
+    }
   }
 }
 
+// Quand le composant est monté initialement
 onMounted(() => {
+  startVideo()
+})
+
+// Quand on revient sur la page (avec keep-alive)
+onActivated(() => {
+  startVideo()
+})
+
+// Quand on quitte la page (avec keep-alive)
+onDeactivated(() => {
   if (videoRef.value) {
-    videoRef.value.play().catch(error => {
-      console.error('Erreur lors de la lecture automatique:', error)
-    })
+    videoRef.value.pause()
   }
 })
 </script>
@@ -94,6 +112,10 @@ onMounted(() => {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+.bg-custom-black {
+  background-color: #000000;
 }
 
 /* Optimisation de la vidéo en arrière-plan */

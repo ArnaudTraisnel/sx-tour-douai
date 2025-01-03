@@ -22,12 +22,12 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="flex flex-col min-h-screen">
     <Navigation />
-    <main class="flex-1 w-full">
+    <main class="flex-grow">
       <Suspense>
         <router-view v-slot="{ Component }">
-          <keep-alive>
+          <keep-alive include="Home">
             <component :is="Component" />
           </keep-alive>
         </router-view>
