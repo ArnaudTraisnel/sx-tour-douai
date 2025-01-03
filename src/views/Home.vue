@@ -22,8 +22,8 @@
     <div class="relative z-10 container-custom mx-auto">
       <div class="flex flex-col items-center justify-center min-h-screen text-center">
         <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6">
-          <span class="text-white">Sx Tour</span>
-          <span class="ml-3 text-red-600">Douai</span>
+          <span class="text-white">Supercross</span>
+          <span class="ml-3 text-red-600"> Douai</span>
         </h1>
         
         <p class="text-xl md:text-2xl lg:text-3xl text-white font-light mb-12 max-w-3xl">

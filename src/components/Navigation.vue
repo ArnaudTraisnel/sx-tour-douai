@@ -5,7 +5,7 @@
         <!-- Logo -->
         <div class="flex items-center">
           <router-link to="/" class="text-lg sm:text-xl md:text-2xl lg:text-2xl font-bold whitespace-nowrap">
-            <span class="text-gray-800">SxTour</span>
+            <span class="text-gray-800">Supercross</span>
             <span class="text-red-600"> Douai</span>
           </router-link>
         </div>
